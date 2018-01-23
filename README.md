@@ -22,8 +22,8 @@ A nice and tight easy peasy come in handy library of reused C code.
 
 ## Version
 
-The version scheme is //MAJOR.MINOR.PATCH// starting at 1.0.0.
+The version scheme is *MAJOR.MINOR.PATCH* starting at 1.0.0.
 
-  * //MAJOR//: Major change in one or all components that break backward compatibility.
-  * //MINOR//: Optimizations, new component or new feature in a component but still backward compatible.
-  * //PATCH//: Bug and security fixes.
+  * *MAJOR*: Major change in one or all components that break backward compatibility.
+  * *MINOR*: Optimizations, new component or new feature in a component but still backward compatible.
+  * *PATCH*: Bug and security fixes.
