@@ -11,6 +11,8 @@ CFLAGS := -O2 -I/usr/local/include -fPIC -fomit-frame-pointer -std=c99 \
 	-pedantic -Wall -Wextra -MMD -pipe
 LDFLAGS := -L/usr/local/lib -shared
 
+CFLAGS += -D_LARGEFILE64_SOURCE
+
 version = "$(MAJOR).$(MINOR).$(PATCH)"
 CFLAGS += -DLIBGAWEN_VERSION="\"$(version)\"" \
 					-DLIBGAWEN_VERSION_MAJOR="$(MAJOR)" \
