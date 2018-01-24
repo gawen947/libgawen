@@ -1,4 +1,7 @@
 TARGET = libgawen.so
+MAJOR  = 1
+MINOR  = 0
+PATCH  = 0
 
 SRC  = $(wildcard *.c)
 OBJS = $(SRC:.c=.o)
@@ -8,8 +11,11 @@ CFLAGS := -O2 -I/usr/local/include -fPIC -fomit-frame-pointer -std=c99 \
 	-pedantic -Wall -Wextra -MMD -pipe
 LDFLAGS := -L/usr/local/lib -shared
 
-version = $(shell cat VERSION)
-CFLAGS += -DLIBGAWEN_VERSION="\"$(version)\""
+version = "$(MAJOR).$(MINOR).$(PATCH)"
+CFLAGS += -DLIBGAWEN_VERSION="\"$(version)\"" \
+					-DLIBGAWEN_VERSION_MAJOR="$(MAJOR)" \
+					-DLIBGAWEN_VERSION_MINOR="$(MINOR)" \
+					-DLIBGAWEN_VERSION_PATCH="$(PATCH)"
 
 commit = $(shell ./hash.sh)
 ifneq ($(commit), UNKNOWN)
@@ -58,6 +64,8 @@ install: $(TARGET).$(version)
 	@echo "===> Installing $(TARGET).$(version)"
 	$(Q)install -s $(TARGET).$(version) /usr/local/lib
 	$(Q)ln -fs /usr/local/lib/$(TARGET).$(version) /usr/local/lib/$(TARGET)
+	$(Q)ln -fs /usr/local/lib/$(TARGET).$(version) /usr/local/lib/$(TARGET).$(MAJOR)
+	$(Q)ln -fs /usr/local/lib/$(TARGET).$(version) /usr/local/lib/$(TARGET).$(MAJOR).$(MINOR)
 	@echo "===> Installing headers"
 	$(Q)mkdir -p /usr/local/include/gawen
 	$(Q)cp *.h /usr/local/include/gawen
@@ -67,6 +75,8 @@ install: $(TARGET).$(version)
 uninstall:
 	@echo "===> Uninstalling $(TARGET).$(version)"
 	$(Q)rm -f /usr/local/lib/$(TARGET).$(version)
+	$(Q)rm -f /usr/local/lib/$(TARGET).$(MAJOR)
+	$(Q)rm -f /usr/local/lib/$(TARGET).$(MAJOR).$(MINOR)
 	$(Q)rm -f /usr/local/lib/$(TARGET)
 	@echo "===> Uninstalling headers"
 	$(Q)rm -rf /usr/local/include/gawen
