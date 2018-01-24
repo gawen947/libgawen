@@ -154,7 +154,7 @@ uint32_t hash_str_jenkins(const void *key)
 /* Robert Jenkins's integer hash */
 uint32_t hash_int_jenkins(const void *key)
 {
-  register uint32_t a =(uint32_t)key;
+  register uint32_t a = (uint32_t)key;
 
   a = (a+0x7ed55d16) + (a<<12);
   a = (a^0xc761c23c) ^ (a>>19);
