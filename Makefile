@@ -7,9 +7,9 @@ SRC  = $(wildcard *.c)
 OBJS = $(SRC:.c=.o)
 DEPS = $(SRC:.c=.d)
 
-CFLAGS := -O2 -I/usr/local/include -fPIC -fomit-frame-pointer -std=c99 \
+CFLAGS := -O2 -fPIC -fomit-frame-pointer -std=c99 \
 	-pedantic -Wall -Wextra -MMD -pipe
-LDFLAGS := -L/usr/local/lib -shared
+LDFLAGS := -shared
 
 CFLAGS += -D_LARGEFILE64_SOURCE
 
@@ -64,24 +64,24 @@ clean:
 
 install: $(TARGET).$(version)
 	@echo "===> Installing $(TARGET).$(version)"
-	$(Q)install -s $(TARGET).$(version) /usr/local/lib
-	$(Q)ln -fs /usr/local/lib/$(TARGET).$(version) /usr/local/lib/$(TARGET)
-	$(Q)ln -fs /usr/local/lib/$(TARGET).$(version) /usr/local/lib/$(TARGET).$(MAJOR)
-	$(Q)ln -fs /usr/local/lib/$(TARGET).$(version) /usr/local/lib/$(TARGET).$(MAJOR).$(MINOR)
+	$(Q)install -s $(TARGET).$(version) /usr/lib
+	$(Q)ln -fs /usr/lib/$(TARGET).$(version) /usr/lib/$(TARGET)
+	$(Q)ln -fs /usr/lib/$(TARGET).$(version) /usr/lib/$(TARGET).$(MAJOR)
+	$(Q)ln -fs /usr/lib/$(TARGET).$(version) /usr/lib/$(TARGET).$(MAJOR).$(MINOR)
 	@echo "===> Installing headers"
-	$(Q)mkdir -p /usr/local/include/gawen
-	$(Q)cp *.h /usr/local/include/gawen
-	$(Q)chmod 755 /usr/local/include/gawen
-	$(Q)chmod 644 /usr/local/include/gawen/*.h
+	$(Q)mkdir -p /usr/include/gawen
+	$(Q)cp *.h /usr/include/gawen
+	$(Q)chmod 755 /usr/include/gawen
+	$(Q)chmod 644 /usr/include/gawen/*.h
 
 uninstall:
 	@echo "===> Uninstalling $(TARGET).$(version)"
-	$(Q)rm -f /usr/local/lib/$(TARGET).$(version)
-	$(Q)rm -f /usr/local/lib/$(TARGET).$(MAJOR)
-	$(Q)rm -f /usr/local/lib/$(TARGET).$(MAJOR).$(MINOR)
-	$(Q)rm -f /usr/local/lib/$(TARGET)
+	$(Q)rm -f /usr/lib/$(TARGET).$(version)
+	$(Q)rm -f /usr/lib/$(TARGET).$(MAJOR)
+	$(Q)rm -f /usr/lib/$(TARGET).$(MAJOR).$(MINOR)
+	$(Q)rm -f /usr/lib/$(TARGET)
 	@echo "===> Uninstalling headers"
-	$(Q)rm -rf /usr/local/include/gawen
+	$(Q)rm -rf /usr/include/gawen
 
 
 -include $(DEPS)
