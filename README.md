@@ -13,6 +13,8 @@ A nice and tight easy peasy come in handy library of reused C code.
   * **sm-kr**: Implementation of the Karp-Rabin String Matching algorithm.
   * **iobuf**: Buffered I/O.
   * **string-utils**: String related functions.
+  * **time**: Time related functions.
+  * **scale**: Human readable representation of numbers.
   * **help**: Display help messages for long and short options.
   * **safe-call**: Automatically check syscall for error codes.
   * **daemon**: Handle PID and drop privileges.
