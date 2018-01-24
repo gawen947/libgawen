@@ -25,7 +25,27 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
-#define UNUSED(x) (void)(x)
-#define sizeof_array(x) (sizeof(x) / sizeof((x)[0]))
+#ifndef S_BOOLEAN
+/* string representation of a boolean */
+# define S_BOOLEAN(a) (a ? "true" : "false")
+#endif
+
+#ifndef UNUSED
+/* avoid warnings about unused variables */
+# define UNUSED(x) (void)(x)
+#endif
+
+#ifndef sizeof_array
+/* number of elements in an array */
+# define sizeof_array(x) (sizeof(x) / sizeof((x)[0]))
+#endif
+
+#ifndef MIN
+# define MIN(x,y) ((x) < (y) ? (x) : (y))
+#endif
+
+#ifndef MAX
+# define MAX(x,y) ((x) > (y) ? (x) : (y))
+#endif
 
 #endif /* _COMMON_H_ */
