@@ -30,6 +30,8 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include <syslog.h>
+#include <string.h>
+#include <errno.h>
 #include <err.h>
 
 #include "log.h"
@@ -59,7 +61,7 @@ static void sysstd_vsyslog(bool display_error, int priority, const char *fmt, va
 {
   if(display_error) {
     vsnprintf(msg_buf, MAX_MSG_SIZE, fmt, args);
-    syslog(priority, "%s: %m", msg_buf);
+    syslog(priority, "%s: %s", msg_buf, strerror(errno));
   }
   else
     vsyslog(priority, fmt, args);
