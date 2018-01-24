@@ -22,8 +22,8 @@
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _STRING_UTILS_H_
-#define _STRING_UTILS_H_
+#ifndef _LIBGAWEN_STRING_H_
+#define _LIBGAWEN_STRING_H_
 
 /* Transform macro argument as string literal. */
 #define _stringify(s) #s
@@ -48,4 +48,4 @@ unsigned int stresc(char *buf, const char *str);
    directly following. Return NULL in case of a parsing error. */
 const char * strunesc(char *buf, const char *str);
 
-#endif /* _STRING_UTILS_H_ */
+#endif /* _LIBGAWEN_STRING_H_ */
