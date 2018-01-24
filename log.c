@@ -22,6 +22,10 @@
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifdef __linux__
+# define _DEFAULT_SOURCE 1
+#endif
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdarg.h>
