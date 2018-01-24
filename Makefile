@@ -46,7 +46,7 @@ ifneq ($(SSE42_SUPPORT),)
 	CFLAGS += -msse4.2
 endif
 
-.PHONY: all clean
+.PHONY: all clean install uninstall
 
 %.o: %.c
 	@echo "===> CC $<"
