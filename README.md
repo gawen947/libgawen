@@ -15,6 +15,7 @@ A nice and tight easy peasy come in handy library of reused C code.
   * **string-utils**: String related functions.
   * **help**: Display help messages for long and short options.
   * **safe-call**: Automatically check syscall for error codes.
+  * **daemon**: Handle PID and drop privileges.
   * **xatoi**: Efficient parsing of unsigned integer (with error reporting).
   * **atoi-gen**: Generic integer parsing.
   * **verbose**: Toggable verbose messages.
