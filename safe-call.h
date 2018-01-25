@@ -36,6 +36,8 @@
 # include <sys/capsicum.h>
 #endif
 
+#define xfree(p) (p ? free(p) : (void))
+
 /* Default error action. Just use err() to
    display the message, the error number as
    string and abort with EXIT_FAILURE. */
