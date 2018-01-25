@@ -19,6 +19,7 @@ A nice and tight easy peasy come in handy library of reused C code.
   * **safe-call**: Automatically check syscall for error codes.
   * **daemon**: Handle PID and drop privileges.
   * **socket**: Socket related functions.
+  * **align**: Align description/value fields on stdout, stderr or files.
   * **xatoi**: Efficient parsing of unsigned integer (with error reporting).
   * **atoi-gen**: Generic integer parsing.
   * **verbose**: Toggable verbose messages.
