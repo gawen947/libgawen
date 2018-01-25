@@ -68,6 +68,7 @@ ssize_t xrecv(int sockfd, void *buf, size_t len, int flags);
 int xbind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
 int xconnect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
 char * xstrdup(const char *s);
+void xstrcpy(char *dst, const char *src, size_t count); /* fail if strlen(src) > count */
 #ifdef USE_THREAD
 int xsem_init(sem_t *sem, int pshared, unsigned int value);
 #endif /* USE_THREAD */

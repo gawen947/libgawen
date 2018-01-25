@@ -123,3 +123,11 @@ SAFE_CALL3(accept, < 0, "accept error", int, int, struct sockaddr *,
 
 SAFE_CALL4(send, < 0, "send error", ssize_t, int, const void *, size_t, int)
 SAFE_CALL4(recv, < 0, "recv error", ssize_t, int, void *, size_t, int)
+
+void xstrcpy(char *dst, const char *src, size_t count)
+{
+  if(strlen(src) > count)
+    safecall_err_act("too long");
+  strcpy(dst, src);
+}
+
