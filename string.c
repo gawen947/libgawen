@@ -34,7 +34,25 @@ const char * basename(const char *s)
   return base;
 }
 
-unsigned int strip(char *buf, const char *remove, unsigned int size)
+char * strip(char *s, int (*istrim)(int))
+{
+  char *e;
+
+  while(istrim(*s))
+    s++;
+
+  if(*s == '\0')
+    return s;
+
+  for(e = s ; *e != '\0' ; e++);
+  for(e--   ; istrim(*e) ; e--);
+
+  *(e + 1) = '\0';
+
+  return s;
+}
+
+unsigned int rstrip_s(char *buf, const char *remove, unsigned int size)
 {
   if(!size)
     return 0;
@@ -43,32 +61,34 @@ unsigned int strip(char *buf, const char *remove, unsigned int size)
     const char *r;
 
     for(r = remove ; *r ; r++) {
-      if(buf[size] == *r) {
-        buf[size] = '\0';
+      if(buf[size] == *r)
         break;
-      }
     }
 
     if(*r == '\0')
       break;
   }
 
-  return size + 1;
+  size++;
+  buf[size] = '\0';
+
+  return size;
 }
 
-unsigned int strip_space(char *buf, unsigned int size)
+unsigned int rstrip(char *buf, int (*istrim)(int), unsigned int size)
 {
   if(!size)
     return 0;
 
   while(size--) {
-    if(isspace(buf[size]))
-      buf[size] = '\0';
-    else
+    if(!istrim(buf[size]))
       break;
   }
 
-  return size + 1;
+  size++;
+  buf[size] = '\0';
+
+  return size;
 }
 
 unsigned int stresc(char *buf, const char *str)
