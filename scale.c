@@ -36,6 +36,41 @@
 
 static char buffer[SCALE_BUFFER_SIZE];
 
+const char * scale_metric(uint64_t value, const char *unit)
+{
+  const char *prefix = "";
+  uint64_t factor = 1;
+
+  if(value > 1000000000000000000LLU) {
+    prefix = "E";
+    factor = 1000000000000000000LLU;
+  }
+  else if(value > 1000000000000000LLU) {
+    prefix = "P";
+    factor = 1000000000000000LLU;
+  }
+  else if(value > 1000000000000LLU) {
+    prefix = "T";
+    factor = 1000000000000LLU;
+  }
+  else if(value > 1000000000LLU) {
+    prefix = "G";
+    factor = 1000000000LLU;
+  }
+  else if(value > 1000000LLU) {
+    prefix = "M";
+    factor = 1000000LLU;
+  }
+  else if(value > 1000LLU) {
+    prefix = "k";
+    factor = 1000LLU;
+  }
+
+  snprintf(buffer, SCALE_BUFFER_SIZE, "%.2f %s%s", (double)value / factor, prefix, unit);
+
+  return buffer;
+}
+
 const char * scale_nsec(uint64_t nsec)
 {
   const char *unit = "ns";

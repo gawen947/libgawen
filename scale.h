@@ -30,6 +30,7 @@
 /* Those functions convert various integer or floating point numbers
    into a human-readable representation with magnitude prefixed units. */
 
+const char * scale_metric(uint64_t value, const char *unit);
 const char * scale_nsec(uint64_t nsec);
 
 #endif /* _LIBGAWEN_SCALE_H_ */
