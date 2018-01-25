@@ -25,6 +25,13 @@
 #ifndef _LIBGAWEN_STRING_H_
 #define _LIBGAWEN_STRING_H_
 
+#include <ctype.h>
+
+/* Remove leading and trailing spaces.
+   The rtrim() variant only remove trailing spaces. */
+#define trim(s)       strip(s, isspace)
+#define rtrim(s, len) rstrip(s, isspace, len)
+
 /* Transform macro argument as string literal. */
 #define _stringify(s) #s
 #define stringify(s) _stringify(s)
@@ -32,7 +39,8 @@
 /* Equivalent of the Unix basename command. */
 const char * basename(const char *s);
 
-/* Trim characters according to istrim(),
+/* Remove characters according to istrim(),
+   at the beginning and end of the string,
    and return the start of the new string. */
 char * strip(char *s, int (*istrim)(int));
 
