@@ -36,7 +36,10 @@
 # include <sys/capsicum.h>
 #endif
 
-#define xfree(p) (p ? free(p) : (void))
+#define xfree(p) do { \
+    if(p)             \
+      free(p);        \
+  } while(0)
 
 /* Default error action. Just use err() to
    display the message, the error number as
