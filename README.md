@@ -20,6 +20,7 @@ A nice and tight easy peasy come in handy library of reused C code.
   * **daemon**: Handle PID and drop privileges.
   * **serial**: Initialize and configure serial ports.
   * **socket**: Socket related functions.
+  * **signal**: Signal related functions.
   * **align**: Align description/value fields on stdout, stderr or files.
   * **xatoi**: Efficient parsing of unsigned integer (with error reporting).
   * **atoi-gen**: Generic integer parsing.
