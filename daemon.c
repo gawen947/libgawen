@@ -22,6 +22,12 @@
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifdef __linux__
+# define _DEFAULT_SOURCE 1
+# define _BSD_SOURCE 1
+# define _GNU_SOURCE 1
+#endif
+
 #include <sys/types.h>
 #include <stdlib.h>
 #include <stdio.h>

@@ -22,10 +22,14 @@
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifdef __linux__
+# define _POSIX_C_SOURCE 199309L
+#endif
+
 #include <sys/types.h>
+#include <time.h>
 #include <stdio.h>
 #include <stdint.h>
-#include <time.h>
 #include <assert.h>
 
 #include "common.h"

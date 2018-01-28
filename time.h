@@ -25,6 +25,10 @@
 #ifndef _LIBGAWEN_TIME_H_
 #define _LIBGAWEN_TIME_H_
 
+#ifdef __linux__
+# define _POSIX_C_SOURCE 199309L
+#endif
+
 #include <stdint.h>
 #include <time.h>
 

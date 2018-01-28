@@ -22,6 +22,11 @@
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifdef __linux__
+# define _DEFAULT_SOURCE 1
+# define _BSD_SOURCE 1
+#endif
+
 #include <stdlib.h>
 #include <termios.h>
 #include <fcntl.h>
