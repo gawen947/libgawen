@@ -22,6 +22,10 @@
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifdef __linux__
+# define _POSIX_C_SOURCE 200809L
+#endif
+
 #include <string.h>
 
 #include "flags.h"
