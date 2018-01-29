@@ -21,6 +21,7 @@ A nice and tight easy peasy come in handy library of reused C code.
   * **serial**: Initialize and configure serial ports.
   * **socket**: Socket related functions.
   * **signal**: Signal related functions.
+  * **flags**: Manipulate bitflags arrays.
   * **align**: Align description/value fields on stdout, stderr or files.
   * **xatoi**: Efficient parsing of unsigned integer (with error reporting).
   * **atoi-gen**: Generic integer parsing.
