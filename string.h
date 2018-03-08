@@ -36,6 +36,10 @@
 #define _stringify(s) #s
 #define stringify(s) _stringify(s)
 
+/* Compare two byte strings from the end.
+   Useful for comparing string suffixes. */
+#define memrevcmp(s, d, len) memcmp(s - len, d - len, len)
+
 /* Equivalent of the Unix basename command. */
 const char * basename(const char *s);
 
