@@ -40,6 +40,9 @@
    Useful for comparing string suffixes. */
 #define memrevcmp(s, d, len) memcmp(s - len, d - len, len)
 
+/* Compare string 'a' to exact string 'b'. */
+#define strNcmp(a, b) strncmp(a, b, strlen(b))
+
 /* Equivalent of the Unix basename command. */
 const char * basename(const char *s);
 
