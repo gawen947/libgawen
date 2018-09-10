@@ -37,6 +37,6 @@ const char * scale_nsec_u64(uint64_t nsec);
    prefixed units to floating point numbers or integer. */
 
 double   unscale_metric_d(const char *s, const char *unit);
-uint64_t unscale_time_nsec_u64(const char *s);
+uint64_t unscale_nsec_u64(const char *s);
 
 #endif /* _LIBGAWEN_SCALE_H_ */

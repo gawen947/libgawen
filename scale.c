@@ -132,6 +132,10 @@ const char * scale_nsec_u64(uint64_t nsec)
     unit   = "us";
     factor = NANO_MICROS;
   }
+  else {
+    unit   = "ns";
+    factor = 1;
+  }
 
   snprintf(buffer, SCALE_BUFFER_SIZE, "%.2f %s", (double)nsec / factor, unit);
 
@@ -148,6 +152,9 @@ double unscale_metric_d(const char *s, const char *unit)
 
   /* skip spaces until metric prefix */
   for(; isspace(*endptr) ; endptr++);
+
+  if(*endptr == '\0')
+    return NAN;
 
   /* scale according to unit */
   switch(*endptr++) {
@@ -193,6 +200,9 @@ double unscale_metric_d(const char *s, const char *unit)
   case 'a':
     result /= METRIC_ATTO;
     break;
+  default:
+    endptr--; /* there were no prefix */
+    break;
   }
 
   /* If *unit* is not precised,
@@ -210,7 +220,7 @@ double unscale_metric_d(const char *s, const char *unit)
     return NAN;
 }
 
-uint64_t unscale_time_nsec_u64(const char *s)
+uint64_t unscale_nsec_u64(const char *s)
 {
   double result;
   char *endptr;
@@ -253,6 +263,29 @@ uint64_t unscale_time_nsec_u64(const char *s)
   }
 
   /* scale according to unit (word) */
+  if(result < 2.0) {
+    if(!strcmp(endptr, "nanosecond") || !strcmp(endptr, "nano"))
+      return (uint64_t)result;
+    else if(!strcmp(endptr, "microsecond") || !strcmp(endptr, "micro"))
+      return (uint64_t)(result * NANO_MICROS);
+    else if(!strcmp(endptr, "millisecond") || !strcmp(endptr, "milli"))
+      return (uint64_t)(result * NANO_MILLIS);
+    else if(!strcmp(endptr, "second") || !strcmp(endptr, "sec"))
+      return (uint64_t)(result * NANO_SECONDS);
+    else if(!strcmp(endptr, "minute") || !strcmp(endptr, "min"))
+      return (uint64_t)(result * NANO_MINUTES);
+    else if(!strcmp(endptr, "hour"))
+      return (uint64_t)(result * NANO_HOURS);
+    else if(!strcmp(endptr, "day"))
+      return (uint64_t)(result * NANO_DAYS);
+    else if(!strcmp(endptr, "week"))
+      return (uint64_t)(result * NANO_WEEKS);
+    else if(!strcmp(endptr, "month"))
+      return (uint64_t)(result * NANO_MONTHS);
+    else if(!strcmp(endptr, "year"))
+      return (uint64_t)(result * NANO_YEARS);
+  }
+
   if(!strcmp(endptr, "ns") || !strcmp(endptr, "nanoseconds") || !strcmp(endptr, "nanos"))
     return (uint64_t)result;
   else if(!strcmp(endptr, "us") || !strcmp(endptr, "microseconds") || !strcmp(endptr, "micros"))
@@ -274,7 +307,7 @@ uint64_t unscale_time_nsec_u64(const char *s)
   else if(!strcmp(endptr, "years"))
     return (uint64_t)(result * NANO_DAYS);
 
-  /* in any other case return NaN */
+  /* in any other case return -1 to signal an error */
 ERROR:
-  return NAN;
+  return (uint64_t)-1;
 }
