@@ -8,7 +8,7 @@ OBJS = $(SRC:.c=.o)
 DEPS = $(SRC:.c=.d)
 
 CFLAGS := -O2 -fPIC -fomit-frame-pointer -std=c99 \
-	-pedantic -Wall -Wextra -MMD -pipe
+	-pedantic -Wall -Wextra -MMD -pipe -ggdb
 LDFLAGS := -shared
 
 CFLAGS += -D_LARGEFILE64_SOURCE
@@ -64,7 +64,7 @@ clean:
 
 install: $(TARGET).$(version)
 	@echo "===> Installing $(TARGET).$(version)"
-	$(Q)install -s $(TARGET).$(version) /usr/lib
+	$(Q)install $(TARGET).$(version) /usr/lib
 	$(Q)ln -fs /usr/lib/$(TARGET).$(version) /usr/lib/$(TARGET)
 	$(Q)ln -fs /usr/lib/$(TARGET).$(version) /usr/lib/$(TARGET).$(MAJOR)
 	$(Q)ln -fs /usr/lib/$(TARGET).$(version) /usr/lib/$(TARGET).$(MAJOR).$(MINOR)
