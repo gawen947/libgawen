@@ -1,7 +1,7 @@
 TARGET = libgawen.so
 MAJOR  = 1
-MINOR  = 7
-PATCH  = 1
+MINOR  = 8
+PATCH  = 0
 
 SRC  = $(wildcard *.c)
 OBJS = $(SRC:.c=.o)
