@@ -67,9 +67,14 @@ void * ht_lookup(htable_t htable, const void *key,
                  void *optarg);
 
 /* Walk through the hash table and apply the action function
-   on each entry, passing the extra data as second argument
-   to this function. */
+   on each entry, passing the entry key, data and an extra data pointer.
+   The second version, ht_walk2, also pass the entry key.
+   The action is in the form:
+     For ht_walk : void action(void *entry_data, void *data);
+     For ht_walk2: void action(const void *entry_key, void *entry_data, void *data);
+*/
 void ht_walk(htable_t htable, void (*action)(void *, void *), void *data);
+void ht_walk2(htable_t htable, void (*action)(const void *, void *, void *), void *data);
 
 /* Delete the entry specified by key from the hash table.
    The destroy function used at creation is used to destroy

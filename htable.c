@@ -134,6 +134,18 @@ void ht_walk(htable_t ht, void (*action)(void *, void *), void *data)
   }
 }
 
+void ht_walk2(htable_t ht, void (*action)(const void *, void *, void *), void *data)
+{
+  unsigned int i;
+
+  for(i = 0 ; i < ht->nbuckets ; i++) {
+    struct entry *entry;
+
+    for(entry = ht->buckets[i] ; entry ; entry = entry->next)
+      action(entry->key, entry->data, data);
+  }
+}
+
 void ht_delete(htable_t ht, const void *key)
 {
   struct entry *entry;
