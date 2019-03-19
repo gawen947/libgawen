@@ -310,11 +310,11 @@ uint64_t unscale_nsec_u64(const char *s)
   else if(!strcmp(endptr, "days"))
     return (uint64_t)(result * NANO_DAYS);
   else if(!strcmp(endptr, "weeks"))
-    return (uint64_t)(result * NANO_DAYS);
+    return (uint64_t)(result * NANO_WEEKS);
   else if(!strcmp(endptr, "months"))
-    return (uint64_t)(result * NANO_DAYS);
+    return (uint64_t)(result * NANO_MONTHS);
   else if(!strcmp(endptr, "years"))
-    return (uint64_t)(result * NANO_DAYS);
+    return (uint64_t)(result * NANO_YEARS);
 
   /* in any other case return -1 to signal an error */
 ERROR:
@@ -396,11 +396,11 @@ uint64_t unscale_usec_u64(const char *s)
   else if(!strcmp(endptr, "days"))
     return (uint64_t)(result * MICRO_DAYS);
   else if(!strcmp(endptr, "weeks"))
-    return (uint64_t)(result * MICRO_DAYS);
+    return (uint64_t)(result * MICRO_WEEKS);
   else if(!strcmp(endptr, "months"))
-    return (uint64_t)(result * MICRO_DAYS);
+    return (uint64_t)(result * MICRO_MONTHS);
   else if(!strcmp(endptr, "years"))
-    return (uint64_t)(result * MICRO_DAYS);
+    return (uint64_t)(result * MICRO_YEARS);
 
   /* in any other case return -1 to signal an error */
 ERROR:
