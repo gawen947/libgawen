@@ -46,15 +46,34 @@ htable_t ht_create(unsigned int nbuckets,
                    bool (*compare)(const void *, const void *),
                    void (*destroy)(void *));
 
-/* Search, insert or replace an entry inside the hash table.
-   If data is NULL then this function will return the data
-   associated to the entry if found in the hash table or NULL
-   otherwise. If data is not NULL then this function will
-   replace the entry with the new data and key if found inside
-   the hash table. Otherwise it will simply insert the data
-   inside the hash table. With a non NULL data argument this
-   function will always return the specified data. */
+/* Those function search, insert or replace an entry inside
+   the hash table. If data is NULL, all those functions
+   revert to a simple lookup in the hash table. If an entry
+   was found for the key, it returns the entry's data,
+   otherwise it returns NULL.
+
+   If data is specified, the three functions will have
+   different behaviors. Anytime an entry is replaced, the old
+   entry is destroyed and both the entry's data and entry's
+   key are replaced.
+
+   ht_insert_or_replace (aka ht_search) replaces the entry
+   if it is present or insert it otherwise. It always return
+   the new data.
+
+   ht_replace replaces the entry if it is present. Otherwise
+   it does nothing and return NULL.
+
+   ht_insert insert the entry if it is not present. Otherwise,
+   if it is present, it returns the entry's data.
+
+   NOTE: In a future MAJOR version, ht_search will only search
+   for an entry without modifying the data. Thus its data
+   argument will disappear. */
+#define ht_insert_or_replace ht_search
 void * ht_search(htable_t htable, const void *key, void *data);
+void * ht_replace(htable_t htable, const void *key, void *data);
+void * ht_insert(htable_t htable, const void *key, void *data);
 
 /* Lookup inside the hash table for an entry specified by key.
    If this entry is found, this function simply return the
@@ -64,7 +83,9 @@ void * ht_search(htable_t htable, const void *key, void *data);
    first argument and the optarg as its second argument. The key
    point with this function is that is that it will not call the
    retrieve function as long as the requested entry is already
-   inside the hash table. */
+   inside the hash table.
+
+   NOTE: This will probably change name in a future MAJOR version. */
 void * ht_lookup(htable_t htable, const void *key,
                  void * (*retrieve)(const void *, void *),
                  void *optarg);

@@ -69,10 +69,15 @@ htable_t ht_create(unsigned int nbuckets,
   return ht;
 }
 
+/* also known as ht_insert_or_replace() */
+/* FIXME: In future MAJOR version the name of this function
+   must be replaced by ht_insert_or_replace() and ht_search()
+   used as a synonym for ht_insert(ht, key, NULL) or even better
+   provide a dedicated function to do so. */
 void * ht_search(htable_t ht, const void *key, void *data)
 {
   struct entry *entry;
-  uint32_t index    = IDX(ht->hash(key), ht->nbuckets);
+  uint32_t index = IDX(ht->hash(key), ht->nbuckets);
 
   for(entry = ht->buckets[index] ; entry ; entry = entry->next) {
     if(ht->compare(entry->key, key)) {
@@ -101,6 +106,54 @@ void * ht_search(htable_t ht, const void *key, void *data)
   return NULL;
 }
 
+void * ht_replace(htable_t ht, const void *key, void *data)
+{
+  struct entry *entry;
+  uint32_t index = IDX(ht->hash(key), ht->nbuckets);
+
+  for(entry = ht->buckets[index] ; entry ; entry = entry->next) {
+    if(ht->compare(entry->key, key)) {
+      if(data) {
+        ht->destroy(entry->data);
+        entry->key  = key;
+        entry->data = data;
+      }
+
+      return entry->data;
+    }
+  }
+
+  return NULL;
+}
+
+
+void * ht_insert(htable_t ht, const void *key, void *data)
+{
+  struct entry *entry;
+  uint32_t index = IDX(ht->hash(key), ht->nbuckets);
+
+  for(entry = ht->buckets[index] ; entry ; entry = entry->next) {
+    if(ht->compare(entry->key, key))
+      return entry->data;
+  }
+
+  if(data) {
+    struct entry *new = malloc(sizeof(struct entry));
+
+    new->key  = key;
+    new->data = data;
+    new->next = ht->buckets[index];
+
+    ht->buckets[index] = new;
+
+    return data;
+  }
+
+  return NULL;
+}
+
+/* FIXME: In a future MAJOR version, the name of this function
+   should probably be replaced with something more appropriate. */
 void * ht_lookup(htable_t ht, const void *key,
                  void * (*retrieve)(const void *, void *),
                  void *optarg)
