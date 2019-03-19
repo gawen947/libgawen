@@ -37,7 +37,10 @@ typedef struct htable * htable_t;
    last function destroy data when necessary. It should be
    used to destroy the key too as long as it is stored
    with the data (for example inside a structure). Not useful
-   though when the key is only an integer. */
+   though when the key is only an integer.
+
+   You can also free the htable entries manually using ht_walk2().
+   However you would still have to call ht_destroy() after that. */
 htable_t ht_create(unsigned int nbuckets,
                    uint32_t (*hash)(const void *),
                    bool (*compare)(const void *, const void *),
