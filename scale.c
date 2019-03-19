@@ -43,6 +43,15 @@
 #define NANO_MONTHS  (31LLU  * NANO_DAYS)
 #define NANO_YEARS   (365LLU * NANO_DAYS)
 
+#define MICRO_MILLIS  1000LLU
+#define MICRO_SECONDS 1000000LLU
+#define MICRO_MINUTES (60LLU  * MICRO_SECONDS)
+#define MICRO_HOURS   (60LLU  * MICRO_MINUTES)
+#define MICRO_DAYS    (24LLU  * MICRO_HOURS)
+#define MICRO_WEEKS   (7LLU   * MICRO_DAYS)
+#define MICRO_MONTHS  (31LLU  * MICRO_DAYS)
+#define MICRO_YEARS   (365LLU * MICRO_DAYS)
+
 /* forward */
 #define METRIC_EXA    1000000000000000000LLU
 #define METRIC_PETA   1000000000000000LLU
@@ -306,6 +315,92 @@ uint64_t unscale_nsec_u64(const char *s)
     return (uint64_t)(result * NANO_DAYS);
   else if(!strcmp(endptr, "years"))
     return (uint64_t)(result * NANO_DAYS);
+
+  /* in any other case return -1 to signal an error */
+ERROR:
+  return (uint64_t)-1;
+}
+
+uint64_t unscale_usec_u64(const char *s)
+{
+  double result;
+  char *endptr;
+
+  /* read double */
+  result = strtod(s, &endptr); /* FIXME: use xatod when available */
+
+  /* skip spaces until metric prefix */
+  for(; isspace(*endptr) ; endptr++);
+
+  /* scale according to unit (one letter) */
+  if(*(endptr+1) == '\0') {
+    switch(*endptr) {
+    case 'u':
+      return (uint64_t)result;
+    case 'm':
+      return (uint64_t)(result * MICRO_MILLIS);
+    case 's':
+    case '\0':
+      return (uint64_t)(result * MICRO_SECONDS);
+    case 'M':
+      return (uint64_t)(result * MICRO_MINUTES);
+    case 'H':
+    case 'h':
+      return (uint64_t)(result * MICRO_HOURS);
+    case 'd':
+    case 'D':
+      return (uint64_t)(result * MICRO_DAYS);
+    case 'w':
+    case 'W':
+      return (uint64_t)(result * MICRO_WEEKS);
+    case 'y':
+    case 'Y':
+      return (uint64_t)(result * MICRO_YEARS);
+    default:
+      goto ERROR;
+    }
+  }
+
+  /* scale according to unit (word) */
+  if(result < 2.0) {
+    if(!strcmp(endptr, "microsecond") || !strcmp(endptr, "micro"))
+      return (uint64_t)result;
+    else if(!strcmp(endptr, "millisecond") || !strcmp(endptr, "milli"))
+      return (uint64_t)(result * MICRO_MILLIS);
+    else if(!strcmp(endptr, "second") || !strcmp(endptr, "sec"))
+      return (uint64_t)(result * MICRO_SECONDS);
+    else if(!strcmp(endptr, "minute") || !strcmp(endptr, "min"))
+      return (uint64_t)(result * MICRO_MINUTES);
+    else if(!strcmp(endptr, "hour"))
+      return (uint64_t)(result * MICRO_HOURS);
+    else if(!strcmp(endptr, "day"))
+      return (uint64_t)(result * MICRO_DAYS);
+    else if(!strcmp(endptr, "week"))
+      return (uint64_t)(result * MICRO_WEEKS);
+    else if(!strcmp(endptr, "month"))
+      return (uint64_t)(result * MICRO_MONTHS);
+    else if(!strcmp(endptr, "year"))
+      return (uint64_t)(result * MICRO_YEARS);
+  }
+
+  if(!strcmp(endptr, "us") || !strcmp(endptr, "microseconds") || !strcmp(endptr, "micros"))
+    return (uint64_t)result;
+  else if(!strcmp(endptr, "ms") || !strcmp(endptr, "milliseconds") || !strcmp(endptr, "millis"))
+    return (uint64_t)(result * MICRO_MILLIS);
+  else if(!strcmp(endptr, "seconds") || !strcmp(endptr, "secs"))
+    return (uint64_t)(result * MICRO_SECONDS);
+  else if(!strcmp(endptr, "minutes") || !strcmp(endptr, "mins"))
+    return (uint64_t)(result * MICRO_MINUTES);
+  else if(!strcmp(endptr, "hours"))
+    return (uint64_t)(result * MICRO_HOURS);
+  else if(!strcmp(endptr, "days"))
+    return (uint64_t)(result * MICRO_DAYS);
+  else if(!strcmp(endptr, "weeks"))
+    return (uint64_t)(result * MICRO_DAYS);
+  else if(!strcmp(endptr, "months"))
+    return (uint64_t)(result * MICRO_DAYS);
+  else if(!strcmp(endptr, "years"))
+    return (uint64_t)(result * MICRO_DAYS);
 
   /* in any other case return -1 to signal an error */
 ERROR:
