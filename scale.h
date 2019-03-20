@@ -38,5 +38,6 @@ const char * scale_nsec_u64(uint64_t nsec);
 
 double   unscale_metric_d(const char *s, const char *unit);
 uint64_t unscale_nsec_u64(const char *s);
+uint64_t unscale_usec_u64(const char *s);
 
 #endif /* _LIBGAWEN_SCALE_H_ */
