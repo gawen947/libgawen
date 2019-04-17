@@ -112,7 +112,7 @@ ssize_t iobuf_gets(iofile_t file, void *buf, size_t count);
    user may ensure that every seek will be comprised in this interval. */
 off_t iobuf_lseek(iofile_t file, off_t offset, int whence);
 
-#if !defined(__FreeBSD__) && defined(_LARGEFILE64_SOURCE)
+#if defined(__linux__) && defined(_LARGEFILE64_SOURCE)
 /* The iobuf_lseek64() function repositions the offset of the open stream
    associated with the file argument to the argument offset according to the
    directive whence. For details see lseek64(). There are however two

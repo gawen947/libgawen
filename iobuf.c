@@ -288,7 +288,7 @@ off_t iobuf_lseek(iofile_t file, off_t offset, int whence)
   return res;
 }
 
-#if !defined(__FreeBSD__) && defined(_LARGEFILE64_SOURCE)
+#if defined(__linux__) && defined(_LARGEFILE64_SOURCE)
 off64_t iobuf_lseek64(iofile_t file, off64_t offset, int whence)
 {
   if(whence == SEEK_CUR) {
