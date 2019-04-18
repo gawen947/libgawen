@@ -47,9 +47,48 @@ speed_t int_to_baud(int speed)
     int     intval;
     speed_t baud;
   } *b, bauds[] = {
+    /* Some of those values are only defined
+       so we check if they exist one by one. */
+#ifdef B4000000
+    { 4000000, B4000000 },
+#endif
+#ifdef B3500000
+    { 3500000, B3500000 },
+#endif
+#ifdef B3000000
+    { 3000000, B3000000 },
+#endif
+#ifdef B2500000
+    { 2500000, B2500000 },
+#endif
+#ifdef B2000000
+    { 2000000, B2000000 },
+#endif
+#ifdef B1500000
+    { 1500000, B1500000 },
+#endif
+#ifdef B1152000
+    { 1152000, B1152000 },
+#endif
+#ifdef B1000000
+    { 1000000, B1000000 },
+#endif
+#ifdef B921600
     { 921600, B921600 },
+#endif
+#ifdef B576000
+    { 576000, B576000 },
+#endif
+#ifdef B500000
+    { 500000, B500000 },
+#endif
+#ifdef B560800
     { 460800, B460800 },
+#endif
+#ifdef B230400
     { 230400, B230400 },
+#endif
+    /* The values below are defined on all platforms. */
     { 115200, B115200 },
     { 57600, B57600 },
     { 38400, B38400 },
