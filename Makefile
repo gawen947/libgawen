@@ -1,6 +1,6 @@
 TARGET = libgawen.so
 MAJOR  = 1
-MINOR  = 9
+MINOR  = 10
 PATCH  = 0
 
 SRC  = $(wildcard *.c)
