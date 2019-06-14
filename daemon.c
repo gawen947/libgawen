@@ -74,10 +74,10 @@ int daemon(int nochdir, int noclose)
 
 void write_pid(const char *pid_file)
 {
-  char buf[32];
+  char buf[16];
   int fd = xopen(pid_file, O_WRONLY | O_TRUNC | O_CREAT, 0660);
 
-  sprintf(buf, "%d\n", getpid());
+  snprintf(buf, 16, "%d\n", getpid());
   write(fd, buf, strlen(buf));
   close(fd);
 }
